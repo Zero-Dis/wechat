@@ -15,7 +15,7 @@ return [
     // +----------------------------------------------------------------------
 
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => 1,
     // 应用Trace
     'app_trace'              => false,
     // 应用模式状态
@@ -238,4 +238,11 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    // wechat 配置
+    'wechat'                 => [
+        'appId' => 'wx648de052ae49ac92',
+        'secret' => 'cc2c5298b3080505e48184bf06a8d73c',
+    ],
+
 ];

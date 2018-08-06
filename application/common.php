@@ -10,3 +10,32 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+/**
+ * 封装 httpGuzzle
+ * @param $curlType
+ * @param $url
+ * @param $data
+ * @return mixed
+ */
+function httpGuzzle($curlType,$url,$data)
+{
+    $curlType = strtoupper($curlType);
+    switch ($curlType) {
+        case 'GET':
+            $config['query'] = $data;
+            break;
+        case 'POST':
+            $config['form_params'] = $data;
+            break;
+        default:
+            # code...
+            break;
+    }
+    $config['verify'] = false;
+
+    $client = new \GuzzleHttp\Client();
+    $respose = $client->request($curlType,$url,$config);
+    $result = json_decode($respose->getBody(),true);
+    return $result;
+}
