@@ -39,3 +39,13 @@ function httpGuzzle($curlType,$url,$data)
     $result = json_decode($respose->getBody(),true);
     return $result;
 }
+
+/**
+ * 获取来源地址
+ * @return string
+ */
+function get_url() {
+    //获取来源地址
+    $url = "https://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
+    return $url;
+}
