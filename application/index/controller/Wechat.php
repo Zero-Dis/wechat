@@ -15,22 +15,33 @@ class Wechat extends Controller
     protected $appId;
     protected $secret;
 
-
+    /**
+     * 加载微信配置
+     */
     protected function _initialize(){
         $this->appId = config('wechat.appId');
         $this->secret = config('wechat.secret');
     }
 
-    // 1.获取微信access_token
+    /**
+     * 获取微信access_token
+     * @return mixed|null
+     */
     public function getAccessToken(){
+        $accessToken = cache('accessToken');
+        if($accessToken)
+            return $accessToken;
+
         $param = [
             'grant_type'  =>  'client_credential',
             'appid'       =>  $this->appId,
             'secret'      =>  $this->secret,
         ];
         $result = httpGuzzle('get',$this->accessTokenUrl,$param);
-
         $accessToken = $result['access_token'];
+
+        cache('accessToken',$accessToken,($result['expires_in']-10));
+
         return $accessToken;
     }
 
