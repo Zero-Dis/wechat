@@ -12,7 +12,7 @@ class Index
      */
     public function index()
     {
-        $data = Request::instance()->get();
+        /*$data = Request::instance()->get();
         $signature = $data['signature'];
         $timestamp = $data['timestamp'];
         $nonce = $data['nonce'];
@@ -33,7 +33,7 @@ class Index
             echo $echostr;
         }else{
             return false;
-        }
+        }*/
     }
 
 }
