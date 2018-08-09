@@ -12,6 +12,7 @@ class Index
      */
     public function index()
     {
+        halt(1111111111);
         /*$data = Request::instance()->get();
         $signature = $data['signature'];
         $timestamp = $data['timestamp'];
