@@ -12,8 +12,7 @@ class Index
      */
     public function index()
     {
-        halt(1111111111);
-        /*$data = Request::instance()->get();
+        $data = Request::instance()->get();
         $signature = $data['signature'];
         $timestamp = $data['timestamp'];
         $nonce = $data['nonce'];
@@ -34,7 +33,7 @@ class Index
             echo $echostr;
         }else{
             return false;
-        }*/
+        }
     }
 
 }
