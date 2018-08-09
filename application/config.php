@@ -241,8 +241,9 @@ return [
 
     // wechat 配置
     'wechat'                 => [
-        'appId' => 'wx648de052ae49ac92',
-        'secret' => 'cc2c5298b3080505e48184bf06a8d73c',
+        'appId'     => 'wx648de052ae49ac92',
+        'secret'    => 'cc2c5298b3080505e48184bf06a8d73c',
+        'token'     => 'xuechao'
     ],
 
 ];
