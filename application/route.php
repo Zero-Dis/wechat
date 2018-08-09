@@ -9,13 +9,9 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-return [
-    '__pattern__' => [
-        'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],
 
-];
+// 使用动态注册路由
+use think\Route;
+// 获得商品详情页数据
+Route::get('getOpenId','index/Wechat/getUserOpenId');
+
