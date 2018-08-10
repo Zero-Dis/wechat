@@ -91,7 +91,7 @@ class Wechat extends Controller
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this->formatBizQueryParaMap($urlObj, false);
         $codeUrl =  $this->wechatAuthCodeUrl.$bizString;
-        halt($codeUrl);
+
         return $codeUrl;
     }
 
@@ -117,6 +117,7 @@ class Wechat extends Controller
         {
             $codeUrl = $this->getWechatAuthCode();
             Header("Location: $codeUrl");
+            halt(11);
             die;
         }else{
             $code = $_GET['code'];
