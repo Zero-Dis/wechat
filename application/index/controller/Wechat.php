@@ -82,7 +82,7 @@ class Wechat extends Controller
     public function getWechatAuthCode(){
         // 获取来源地址
         $url = get_url();
-
+        halt($url);
         // 获取code
         $urlObj["appid"] = $this->appId;
         $urlObj["redirect_uri"] = "$url";
