@@ -76,7 +76,6 @@ class Wechat extends Controller
         return $reqPar;
     }
 
-
     /**
      * 网页授权获取用户openId -- 1.获取授权code url
      */

@@ -12,6 +12,6 @@
 
 // 使用动态注册路由
 use think\Route;
-// 获得商品详情页数据
+// 获得用户openid
 Route::get('getOpenId','index/Wechat/getUserOpenId');
 
