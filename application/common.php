@@ -46,6 +46,6 @@ function httpGuzzle($curlType,$url,$data)
  */
 function get_url() {
     //获取来源地址
-    $url = "https://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
+    $url = "http://".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
     return $url;
 }
