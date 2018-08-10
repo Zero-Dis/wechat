@@ -117,7 +117,6 @@ class Wechat extends Controller
         {
             $codeUrl = $this->getWechatAuthCode();
             Header("Location: $codeUrl");
-            halt(11);
             die;
         }else{
             $code = $_GET['code'];
