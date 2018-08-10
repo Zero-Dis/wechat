@@ -122,9 +122,16 @@ class Wechat extends Controller
             $code = $_GET['code'];
             $this->code = $code;
 
-            $url = $this->getOpenIdUrl();
-            halt($url);
-            $data = httpGuzzle('get',$url,[]);
+//            $url = $this->getOpenIdUrl();
+
+            $param = [
+                'appid'     =>  $this->appId,
+                'secret'    =>  $this->secret,
+                'code'      =>  $this->code,
+                'grant_type'=>  "authorization_code",
+            ];
+
+            $data = httpGuzzle('get',$this->userOpenIdUrl,$param);
 
             //取出openid
             $this->openId = $data['openid'];
