@@ -120,6 +120,7 @@ class Wechat extends Controller
             die;
         }else{
             $code = $_GET['code'];
+            halt($code);
             $this->code = $code;
 
             $url = $this->getOpenIdUrl();
