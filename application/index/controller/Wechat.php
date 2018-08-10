@@ -96,20 +96,7 @@ class Wechat extends Controller
     }
 
     /**
-     * 网页授权获取用户openId -- 2.openid Url
-     * @return string
-     */
-    public function getOpenIdUrl(){
-        $urlObj["appid"] = $this->appId;
-        $urlObj["secret"] = $this->secret;
-        $urlObj["code"] = $this->code;
-        $urlObj["grant_type"] = "authorization_code";
-        $bizString = $this->formatBizQueryParaMap($urlObj, false);
-        return $this->userOpenIdUrl.$bizString;
-    }
-
-    /**
-     * 网页授权获取用户openId -- 3.获取openid
+     * 网页授权获取用户openId -- 2.获取openid
      * @return mixed
      */
     public function getUserOpenId(){
@@ -122,8 +109,7 @@ class Wechat extends Controller
             $code = $_GET['code'];
             $this->code = $code;
 
-//            $url = $this->getOpenIdUrl();
-
+            // 请求openid
             $param = [
                 'appid'     =>  $this->appId,
                 'secret'    =>  $this->secret,
