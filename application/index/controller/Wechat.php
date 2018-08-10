@@ -123,6 +123,7 @@ class Wechat extends Controller
             $this->code = $code;
 
             $url = $this->getOpenIdUrl();
+            halt($url);
             $data = httpGuzzle('get',$url,[]);
 
             //取出openid
