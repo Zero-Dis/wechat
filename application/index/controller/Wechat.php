@@ -96,10 +96,10 @@ class Wechat extends Controller
     }
 
     /**
-     * 网页授权获取用户openId -- 2.获取openid
+     * 网页授权获取用户access_token、openid
      * @return mixed
      */
-    public function getUserOpenId(){
+    public function getUserWechatInfo(){
         if (!isset($_GET['code']))
         {
             $codeUrl = $this->getWechatAuthCode();
@@ -118,13 +118,25 @@ class Wechat extends Controller
             ];
 
             $data = httpGuzzle('get',$this->userOpenIdUrl,$param);
-            halt($data);
-
-            cache('wechatUserInfo',$data);
-            //取出openid
-            $this->openId = $data['openid'];
-            return $this->openId;
+            cache('wechatUserInfo',$data,$data['expires_in']?($data['expires_in']-10):7190);
+            return $data;
         }
+    }
+
+    /**
+     * 网页授权获取用户openId -- 2.获取openid
+     * @return mixed
+     */
+    public function getUserOpenId(){
+        $wechatUserInfo = cache('wechatUserInfo');
+        if($wechatUserInfo){
+            //取出openid
+            $this->openId = $wechatUserInfo['openid'];
+        }else{
+            $wechatUserInfoNew = $this->getUserWechatInfo();
+            $this->openId = $wechatUserInfoNew['openid'];
+        }
+        return $this->openId;
     }
 
 }
