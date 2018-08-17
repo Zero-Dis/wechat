@@ -118,7 +118,9 @@ class Wechat extends Controller
             ];
 
             $data = httpGuzzle('get',$this->userOpenIdUrl,$param);
+            halt($data);
 
+            cache('wechatUserInfo',$data);
             //取出openid
             $this->openId = $data['openid'];
             return $this->openId;
