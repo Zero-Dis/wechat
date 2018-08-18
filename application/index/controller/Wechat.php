@@ -212,7 +212,10 @@ class Wechat extends Controller
         return true;
     }
 
-
+    /**
+     * 网页授权获取用户信息 -- 3.拉取用户信息(需scope为 snsapi_userinfo)
+     * @return string
+     */
     public function getUserInfo(){
         // 网页授权获取用户信息 -- 1.获取授权access_token、openid
         $this->getUserWechatInfo();
@@ -231,5 +234,5 @@ class Wechat extends Controller
         }
         return '获取授权access_token有误';
     }
-
+    
 }
