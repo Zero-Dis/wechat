@@ -155,6 +155,7 @@ class Wechat extends Controller
     }
 
     public function refreshAccessToken(){
+        $this->getUserWechatInfo();
         $param = [
             'appid'         =>    $this->appId,
             'grant_type'    =>    'refresh_token',
