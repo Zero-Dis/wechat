@@ -141,7 +141,10 @@ class Wechat extends Controller
         return $this->openId;
     }
 
-
+    /**
+     * 检验授权凭证（access_token）是否有效
+     * @return bool
+     */
     public function checkAccessToken(){
         $param = [
             'access_token' => cache('wechatUserInfo')['access_token'],
@@ -152,17 +155,29 @@ class Wechat extends Controller
         if($check['errcode'] == 0 && $check['errmsg'] == 'ok')
             return true;
         // 刷新 access_token
+        $this->refreshAccessToken();
     }
 
+    /**
+     * 刷新access_token
+     * @return bool
+     */
     public function refreshAccessToken(){
-        $this->getUserWechatInfo();
         $param = [
             'appid'         =>    $this->appId,
             'grant_type'    =>    'refresh_token',
             'refresh_token' =>    cache('wechatUserInfo')['refresh_token'],
         ];
         $refresh = httpGuzzle('get',$this->refreshAccessTokenUrl,$param);
-        halt($refresh);
+        cache('wechatUserInfo',$refresh,$refresh['expires_in']?($refresh['expires_in']-10):7190);
+        if(!in_array('errcode',$refresh))
+            return true;
+        return false;
+    }
+
+
+    public function getUserInfo(){
+        
     }
 
 }
