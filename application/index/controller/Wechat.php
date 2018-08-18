@@ -152,6 +152,7 @@ class Wechat extends Controller
      * @return bool
      */
     public function checkAccessToken(){
+        $this->getWechatAuthCode();
         $param = [
             'access_token' => cache('wechatUserInfo')['access_token'],
             'openid'       => $this->getUserOpenId()
@@ -183,7 +184,7 @@ class Wechat extends Controller
 
 
     public function getUserInfo(){
-        
+
     }
 
 }
