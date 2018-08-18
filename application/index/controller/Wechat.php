@@ -204,7 +204,7 @@ class Wechat extends Controller
 
         if(in_array('errcode',$refresh))
             return false;
-
+        halt($refresh);
         cache('wechatUserInfo',$refresh,$refresh['expires_in']?($refresh['expires_in']-10):7190);
 
         return true;
