@@ -16,6 +16,7 @@ class Wechat extends Controller
     protected $userOpenIdUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?';
     protected $checkAccessTokenUrl = 'https://api.weixin.qq.com/sns/auth?';
     protected $refreshAccessTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?';
+    protected $getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?';
 
     protected $appId;
     protected $secret;
@@ -103,14 +104,54 @@ class Wechat extends Controller
         return $codeUrl;
     }
 
+
     /**
-     * 网页授权获取用户access_token、openid
+     * 网页授权获取用户openId -- 2.获取openid
      * @return mixed
      */
-    public function getUserWechatInfo(){
+    public function getUserOpenId(){
+        $cacheOpenId = cache('wechatUserOpenId');
+        if($cacheOpenId)
+            return $cacheOpenId['openid'];
+
         if (!isset($_GET['code']))
         {
             $codeUrl = $this->getWechatAuthCode();
+            Header("Location: $codeUrl");
+            die;
+        }else{
+            $code = $_GET['code'];
+            $this->code = $code;
+
+            // 请求openid
+            $param = [
+                'appid'     =>  $this->appId,
+                'secret'    =>  $this->secret,
+                'code'      =>  $this->code,
+                'grant_type'=>  "authorization_code",
+            ];
+
+            $data = httpGuzzle('get',$this->userOpenIdUrl,$param);
+
+            cache('wechatUserOpenId',$data,$data['expires_in']?($data['expires_in']-10):7190);
+
+            $this->openId = $data['openid'];
+            return $this->openId;
+        }
+    }
+
+    /**
+     * 网页授权获取用户信息 -- 1.获取授权access_token、openid
+     * @return mixed
+     */
+    public function getUserWechatInfo(){
+        $cacheWechatUserInfo = cache('wechatUserInfo');
+        if($cacheWechatUserInfo)
+            return $cacheWechatUserInfo;
+
+        if (!isset($_GET['code']))
+        {
+            $codeUrl = $this->getWechatAuthCode(true);
             Header("Location: $codeUrl");
             die;
         }else{
@@ -132,27 +173,10 @@ class Wechat extends Controller
     }
 
     /**
-     * 网页授权获取用户openId -- 2.获取openid
-     * @return mixed
-     */
-    public function getUserOpenId(){
-        $wechatUserInfo = cache('wechatUserInfo');
-        if($wechatUserInfo){
-            //取出openid
-            $this->openId = $wechatUserInfo['openid'];
-        }else{
-            $wechatUserInfoNew = $this->getUserWechatInfo();
-            $this->openId = $wechatUserInfoNew['openid'];
-        }
-        return $this->openId;
-    }
-
-    /**
-     * 检验授权凭证（access_token）是否有效
+     * 网页授权获取用户信息 -- 2.检验授权凭证（access_token）是否有效
      * @return bool
      */
     public function checkAccessToken(){
-        $this->getWechatAuthCode();
         $param = [
             'access_token' => cache('wechatUserInfo')['access_token'],
             'openid'       => $this->getUserOpenId()
@@ -162,11 +186,12 @@ class Wechat extends Controller
         if($check['errcode'] == 0 && $check['errmsg'] == 'ok')
             return true;
         // 刷新 access_token
-        $this->refreshAccessToken();
+        $check = $this->refreshAccessToken();
+        return $check;
     }
 
     /**
-     * 刷新access_token
+     * 网页授权获取用户信息 -- 2.刷新access_token（如有需要）
      * @return bool
      */
     public function refreshAccessToken(){
@@ -182,9 +207,24 @@ class Wechat extends Controller
         return false;
     }
 
-
+    
     public function getUserInfo(){
+        // 网页授权获取用户信息 -- 1.获取授权access_token、openid
+        $this->getUserWechatInfo();
+        // 网页授权获取用户信息 -- 2.检验授权凭证（access_token）是否有效
+        $check = $this->checkAccessToken();
+        if($check){
+            // 网页授权获取用户信息 -- 3.拉取用户信息(需scope为 snsapi_userinfo)
+            $param = [
+                'access_token'  =>    cache('wechatUserInfo')['access_token'],
+                'openid'        =>    $this->appId,
+                'lang'          =>    'zh_CN',
+            ];
 
+            $userInfo = httpGuzzle('get',$this->getUserInfoUrl,$param);
+            halt($userInfo);
+        }
+        return '获取授权access_token有误';
     }
 
 }
