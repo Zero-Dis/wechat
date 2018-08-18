@@ -80,8 +80,10 @@ class Wechat extends Controller
 
     /**
      * 网页授权获取用户openId -- 1.获取授权code url
+     * @param bool $isGetUserInfo
+     * @return string
      */
-    public function getWechatAuthCode(){
+    public function getWechatAuthCode($isGetUserInfo = false){
         // 获取来源地址
         $url = get_url();
 
@@ -89,7 +91,11 @@ class Wechat extends Controller
         $urlObj["appid"] = $this->appId;
         $urlObj["redirect_uri"] = "$url";
         $urlObj["response_type"] = "code";
-        $urlObj["scope"] = "snsapi_base";
+        if(!$isGetUserInfo){
+            $urlObj["scope"] = "snsapi_base";
+        }else{
+            $urlObj["scope"] = "snsapi_userinfo";
+        }
         $urlObj["state"] = "STATE"."#wechat_redirect";
         $bizString = $this->formatBizQueryParaMap($urlObj, false);
         $codeUrl =  $this->wechatAuthCodeUrl.$bizString;
