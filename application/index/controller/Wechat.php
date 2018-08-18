@@ -201,10 +201,13 @@ class Wechat extends Controller
             'refresh_token' =>    cache('wechatUserInfo')['refresh_token'],
         ];
         $refresh = httpGuzzle('get',$this->refreshAccessTokenUrl,$param);
+
+        if(in_array('errcode',$refresh))
+            return false;
+
         cache('wechatUserInfo',$refresh,$refresh['expires_in']?($refresh['expires_in']-10):7190);
-        if(!in_array('errcode',$refresh))
-            return true;
-        return false;
+
+        return true;
     }
 
 
