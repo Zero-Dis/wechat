@@ -207,7 +207,7 @@ class Wechat extends Controller
         return false;
     }
 
-    
+
     public function getUserInfo(){
         // 网页授权获取用户信息 -- 1.获取授权access_token、openid
         $this->getUserWechatInfo();

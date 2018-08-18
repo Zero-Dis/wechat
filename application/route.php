@@ -16,3 +16,4 @@ use think\Route;
 Route::get('getOpenId','index/Wechat/getUserOpenId');
 Route::get('checkAccessToken','index/Wechat/checkAccessToken');
 Route::get('refreshAccessToken','index/Wechat/refreshAccessToken');
+Route::get('getUserInfo','index/Wechat/getUserInfo');
