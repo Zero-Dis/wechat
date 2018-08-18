@@ -191,7 +191,7 @@ class Wechat extends Controller
     }
 
     /**
-     * 网页授权获取用户信息 -- 2.刷新access_token（如有需要）
+     * 网页授权获取用户信息 -- 3.刷新access_token（如有需要）
      * @return bool
      */
     public function refreshAccessToken(){
@@ -213,16 +213,16 @@ class Wechat extends Controller
     }
 
     /**
-     * 网页授权获取用户信息 -- 3.拉取用户信息(需scope为 snsapi_userinfo)
+     * 网页授权获取用户信息 -- 4.拉取用户信息(需scope为 snsapi_userinfo)
      * @return string
      */
     public function getUserInfo(){
-        // 网页授权获取用户信息 -- 1.获取授权access_token、openid
+        // 获取授权access_token、openid
         $this->getUserWechatInfo();
-        // 网页授权获取用户信息 -- 2.检验授权凭证（access_token）是否有效
+        // 检验授权凭证（access_token）是否有效，无效则刷新
         $check = $this->checkAccessToken();
         if($check){
-            // 网页授权获取用户信息 -- 3.拉取用户信息(需scope为 snsapi_userinfo)
+            // 拉取用户信息(需scope为 snsapi_userinfo)
             $param = [
                 'access_token'  =>    cache('wechatUserInfo')['access_token'],
                 'openid'        =>    $this->appId,
