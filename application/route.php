@@ -14,3 +14,4 @@
 use think\Route;
 // 获得用户openid
 Route::get('getOpenId','index/Wechat/getUserOpenId');
+Route::get('checkAccessToken','index/Wechat/checkAccessToken');

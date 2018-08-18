@@ -14,6 +14,7 @@ class Wechat extends Controller
     protected $accessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token';
     protected $wechatAuthCodeUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?';
     protected $userOpenIdUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?';
+    protected $checkAccessTokenUrl = 'https://api.weixin.qq.com/sns/auth?';
 
     protected $appId;
     protected $secret;
@@ -137,6 +138,17 @@ class Wechat extends Controller
             $this->openId = $wechatUserInfoNew['openid'];
         }
         return $this->openId;
+    }
+
+
+    public function checkAccessToken(){
+        $param = [
+            'access_token' => cache('wechatUserInfo')['access_token'],
+            'openid'       => $this->getUserOpenId()
+        ];
+
+        $check = httpGuzzle('get',$this->checkAccessTokenUrl,$param);
+        halt($check);
     }
 
 }
