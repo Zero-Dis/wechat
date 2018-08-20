@@ -191,7 +191,7 @@ class Wechat extends Controller
     public function checkAccessToken(){
         $param = [
             'access_token' => cache('wechatUserInfo')['access_token'],
-            'openid'       => $this->getUserOpenId()
+            'openid'       => cache('wechatUserInfo')['openid']
         ];
 
         $check = httpGuzzle('get',$this->checkAccessTokenUrl,$param);
