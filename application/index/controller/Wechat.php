@@ -237,7 +237,7 @@ class Wechat extends Controller
             $userInfo = httpGuzzle('get',$this->getUserInfoUrl,$param);
             halt($userInfo);
         }
-        return $check;
+        halt($check);
     }
     
 }
