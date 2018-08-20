@@ -172,7 +172,14 @@ class Wechat extends Controller
             ];
 
             $data = httpGuzzle('get',$this->userOpenIdUrl,$param);
+
+            foreach ($data as $k=>$v){
+                if('errcode' == $k)
+                    halt($data);
+            }
+
             cache('wechatUserInfo',$data,$data['expires_in']?($data['expires_in']-10):7190);
+
             return $data;
         }
     }
