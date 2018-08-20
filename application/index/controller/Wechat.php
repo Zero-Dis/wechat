@@ -216,7 +216,7 @@ class Wechat extends Controller
 
         foreach ($refresh as $k=>$v){
             if('errcode' == $k)
-                return $refresh;
+                return  cache('wechatUserInfo')['refresh_token'];
         }
 
         cache('wechatUserInfo',$refresh,$refresh['expires_in']?($refresh['expires_in']-10):7190);
