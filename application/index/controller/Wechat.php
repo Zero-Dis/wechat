@@ -145,9 +145,9 @@ class Wechat extends Controller
      * @return mixed
      */
     public function getUserWechatInfo(){
-        /*$cacheWechatUserInfo = cache('wechatUserInfo');
+        $cacheWechatUserInfo = cache('wechatUserInfo');
         if($cacheWechatUserInfo)
-            return $cacheWechatUserInfo;*/
+            return $cacheWechatUserInfo;
 
         if (!isset($_GET['code']))
         {
@@ -204,7 +204,7 @@ class Wechat extends Controller
 
         foreach ($refresh as $k=>$v){
             if('errcode' == $k)
-                return false;
+                return $refresh;
         }
 
         cache('wechatUserInfo',$refresh,$refresh['expires_in']?($refresh['expires_in']-10):7190);
@@ -221,7 +221,7 @@ class Wechat extends Controller
         $this->getUserWechatInfo();
         // 检验授权凭证（access_token）是否有效，无效则刷新
         $check = $this->checkAccessToken();
-        if($check){
+        if($check === true){
             // 拉取用户信息(需scope为 snsapi_userinfo)
             $param = [
                 'access_token'  =>    cache('wechatUserInfo')['access_token'],
@@ -232,7 +232,7 @@ class Wechat extends Controller
             $userInfo = httpGuzzle('get',$this->getUserInfoUrl,$param);
             halt($userInfo);
         }
-        return '获取授权access_token有误';
+        return $check;
     }
     
 }
