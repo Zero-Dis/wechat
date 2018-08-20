@@ -110,6 +110,7 @@ class Wechat extends Controller
      * @return mixed
      */
     public function getUserOpenId(){
+        cache('wechatUserInfo',null);
         $cacheOpenId = cache('wechatUserOpenId');
         if($cacheOpenId)
             return $cacheOpenId['openid'];
