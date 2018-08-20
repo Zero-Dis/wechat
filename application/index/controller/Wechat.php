@@ -145,9 +145,9 @@ class Wechat extends Controller
      * @return mixed
      */
     public function getUserWechatInfo(){
-        /*$cacheWechatUserInfo = cache('wechatUserInfo');
+        $cacheWechatUserInfo = cache('wechatUserInfo');
         if($cacheWechatUserInfo)
-            return $cacheWechatUserInfo;*/
+            return $cacheWechatUserInfo;
 
         if (!isset($_GET['code']))
         {
