@@ -274,13 +274,12 @@ class Wechat extends Controller
         }
         $access_token = $access['access_token'];
         if(empty($access_token)) halt('access_token 获取失败');
+
         // 2.获取 jsapi_ticket
         $param = [
             'access_token' => $access_token,
             'type'         => 'jsapi'
         ];
-
-        halt($param);
         $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
 
         halt($jsapi);
