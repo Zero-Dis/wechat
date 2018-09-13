@@ -247,5 +247,21 @@ class Wechat extends Controller
         }
         halt($check);
     }
+
+
+    public function wechatShare(){
+        // 生成签名
+        // 1.获取 access_token
+        $access = $this->getUserWechatInfo();
+        halt($access);
+
+        // 2.获取 jsapi_ticket
+
+        $this->assign([
+            'appId'=>$this->appId,
+
+        ]);
+        return view();
+    }
     
 }
