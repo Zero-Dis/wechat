@@ -17,3 +17,6 @@ Route::get('getOpenId','index/Wechat/getUserOpenId');
 Route::get('checkAccessToken','index/Wechat/checkAccessToken');
 Route::get('refreshAccessToken','index/Wechat/refreshAccessToken');
 Route::get('getUserInfo','index/Wechat/getUserInfo');
+
+// 微信分享
+Route::get('wechatShare','index/Wechat/wechatShare');
