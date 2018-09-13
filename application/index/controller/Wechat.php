@@ -152,9 +152,9 @@ class Wechat extends Controller
      * @return mixed
      */
     public function getUserWechatInfo(){
-//        $cacheWechatUserInfo = cache('wechatUserInfo');
-//        if($cacheWechatUserInfo)
-//            return $cacheWechatUserInfo;
+        $cacheWechatUserInfo = cache('wechatUserInfo');
+        if($cacheWechatUserInfo)
+            return $cacheWechatUserInfo;
 
         if (!isset($_GET['code']))
         {
@@ -253,7 +253,25 @@ class Wechat extends Controller
     public function wechatShare(){
         // 生成签名
         // 1.获取 access_token
-        $access = $this->getUserWechatInfo();
+        if (!isset($_GET['code']))
+        {
+            $codeUrl = $this->getWechatAuthCode();
+            Header("Location: $codeUrl");
+            die;
+        }else {
+            $code = $_GET['code'];
+            $this->code = $code;
+
+            // 请求openid
+            $param = [
+                'appid' => $this->appId,
+                'secret' => $this->secret,
+                'code' => $this->code,
+                'grant_type' => "authorization_code",
+            ];
+
+            $access = httpGuzzle('get', $this->userOpenIdUrl, $param);
+        }
         $access_token = $access['access_token'];
         if(empty($access_token)) halt('access_token 获取失败');
         // 2.获取 jsapi_ticket
