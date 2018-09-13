@@ -17,6 +17,7 @@ class Wechat extends Controller
     protected $checkAccessTokenUrl = 'https://api.weixin.qq.com/sns/auth?';
     protected $refreshAccessTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/refresh_token?';
     protected $getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?';
+    protected $jsapiTicketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?';
 
     protected $appId;
     protected $secret;
@@ -253,9 +254,16 @@ class Wechat extends Controller
         // 生成签名
         // 1.获取 access_token
         $access = $this->getUserWechatInfo();
-        halt($access);
-
+        $access_token = $access['access_token'];
+        if(empty($access_token)) halt('access_token 获取失败');
         // 2.获取 jsapi_ticket
+        $param = [
+            'access_token' => $access_token,
+            'type'         => 'jsapi'
+        ];
+        $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
+
+        halt($jsapi);
 
         $this->assign([
             'appId'=>$this->appId,
