@@ -166,3 +166,23 @@ function makeSign( $params ){
     $string = Sha1($string);
     return $string;
 }
+
+/**
+ * 将参数拼接为url: key=value&key=value
+ * @param   $params
+ * @return  string
+ */
+function toUrlParams($params){
+    $string = '';
+    if( !empty($params) ){
+        foreach( $params as $key => $value ){
+            //校验空值
+            if(!checkEmpty($value)){
+                $string .= $key ."=". $value . "&";
+            }
+        }
+        $string = trim($string, '&');
+    }
+
+    return $string;
+}
