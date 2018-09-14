@@ -49,6 +49,18 @@
         });
     });
 
+    // 分享到朋友圈
+    $(".fx_btn").on('click', function() {
+        wx.onMenuShareTimeline({
+            title: 'test wechat jsapi',      // 分享标题
+            link: 'https://www.baidu.com',       // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super',     // 分享图标
+            success: function () {
+                // 用户点击了分享后执行的回调函数
+            }
+        })
+    });
+
 
 </script>
 </html>
