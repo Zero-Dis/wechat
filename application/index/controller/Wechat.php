@@ -275,9 +275,9 @@ class Wechat extends Controller
         $access_token = $access['access_token'];
         if(empty($access_token)) halt('access_token 获取失败');*/
 
-        $this->getUserOpenId();
-        cache('wechatUserInfo',null);
-        $cacheOpenId = cache('wechatUserOpenId');
+        $this->getUserWechatInfo();
+//        cache('wechatUserInfo',null);
+        $cacheOpenId = cache('wechatUserInfo');
         $access_token = $cacheOpenId['access_token'];
 
 //        halt($access_token);
