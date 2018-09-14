@@ -250,10 +250,10 @@ class Wechat extends Controller
     }
 
     /**
-     * 微信jsapi 配置 + jsapi接口测试页面
+     * 微信jsapi配置 + jsapi接口测试页面
      * @return \think\response\View
      */
-    public function wechatShare(){
+    public function wechatJsapi(){
         // 生成签名
         // 1.获取 access_token
         $access_token = $this->getAccessToken();
