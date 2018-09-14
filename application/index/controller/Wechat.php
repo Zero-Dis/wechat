@@ -249,7 +249,10 @@ class Wechat extends Controller
         halt($check);
     }
 
-
+    /**
+     * 微信jsapi 配置 + jsapi接口测试页面
+     * @return \think\response\View
+     */
     public function wechatShare(){
         // 生成签名
         // 1.获取 access_token
@@ -285,23 +288,6 @@ class Wechat extends Controller
             'signature' => $signString
         ]);
         return view();
-    }
-
-    //-------------------------------------------------------------------------
-    public function getSacnSignStr(){
-        $wechat_config = [
-            'appid'     =>  $this->appId,//公众号appid
-            'appsecret' =>  $this->secret,//公众号secret
-        ];
-
-        $data['noncestr']     = genRandomString();
-        $data['jsapi_ticket'] = getWxJsapiTicket($wechat_config['appid'],$wechat_config['appsecret']);
-        $data['timestamp']    = time();
-        $data['url']          = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $data['signature']    = makeSign($data);
-        $data['appid']        = $wechat_config['appid'];
-
-        return json_encode($data);
     }
 
 }
