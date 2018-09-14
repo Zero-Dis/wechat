@@ -8,7 +8,7 @@
 <body>
     <div style="text-align: center;width: 100%;height:5.5rem;background-color: red;line-height: 5.5rem" class="qr_btn">扫一扫</div>
     <div style="height: 100px;"></div>
-    <div style="text-align: center;width: 30%;height:5.5rem;background-color: red;line-height: 5.5rem" class="fx_btn">点击分享</div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -52,7 +52,7 @@
     // 分享到朋友圈
     $(".fx_btn").on('click', function() {
         wx.onMenuShareTimeline({
-            title: 'test wechat jsapi',      // 分享标题
+            title: 'test wechat jsapi_',      // 分享标题
             link: 'https://www.baidu.com',       // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png?where=super',     // 分享图标
             success: function () {
