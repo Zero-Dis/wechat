@@ -253,7 +253,7 @@ class Wechat extends Controller
     public function wechatShare(){
         // 生成签名
         // 1.获取 access_token
-        /*if (!isset($_GET['code']))
+        if (!isset($_GET['code']))
         {
             $codeUrl = $this->getWechatAuthCode();
             Header("Location: $codeUrl");
@@ -273,12 +273,12 @@ class Wechat extends Controller
             $access = httpGuzzle('get', $this->userOpenIdUrl, $param);
         }
         $access_token = $access['access_token'];
-        if(empty($access_token)) halt('access_token 获取失败');*/
+        if(empty($access_token)) halt('access_token 获取失败');
 
-        $this->getUserOpenId();
+        /*$this->getUserOpenId();
         cache('wechatUserInfo',null);
         $cacheOpenId = cache('wechatUserOpenId');
-        $access_token = $cacheOpenId['access_token'];
+        $access_token = $cacheOpenId['access_token'];*/
 
 //        halt($access_token);
 
