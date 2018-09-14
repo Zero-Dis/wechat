@@ -20,3 +20,6 @@ Route::get('getUserInfo','index/Wechat/getUserInfo');
 
 // 微信分享
 Route::get('wechatShare','index/Wechat/wechatShare');
+
+// 测试能砺
+Route::get('getSacnSignStr','index/Wechat/getSacnSignStr');
