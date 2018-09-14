@@ -288,7 +288,7 @@ class Wechat extends Controller
             'type'         => 'jsapi'
         ];
 
-        $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
+        $jsapi = httpGuzzle('post',$this->jsapiTicketUrl,$param);
 
         halt($jsapi);
 
