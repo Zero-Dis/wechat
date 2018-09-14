@@ -280,6 +280,8 @@ class Wechat extends Controller
         $cacheOpenId = cache('wechatUserOpenId');
         $access_token = $cacheOpenId['access_token'];
 
+        halt($access_token);
+
         // 2.获取 jsapi_ticket
         $param = [
             'access_token' => $access_token,
