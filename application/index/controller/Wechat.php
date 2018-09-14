@@ -256,12 +256,17 @@ class Wechat extends Controller
         $access_token = $this->getAccessToken();
         if(empty($access_token)) halt('access_token有误');
         // 2.获取 jsapi_ticket
-        $param = [
-            'access_token' => $access_token,
-            'type'         => 'jsapi'
-        ];
+        $jsapi = cache('jsapi');
+        if(!$jsapi){
+            $param = [
+                'access_token' => $access_token,
+                'type'         => 'jsapi'
+            ];
 
-        $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
+            $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
+            cache('jsapi',$jsapi,7190);
+        }
+
 
         halt($jsapi);
 
