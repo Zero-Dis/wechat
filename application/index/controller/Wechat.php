@@ -271,6 +271,8 @@ class Wechat extends Controller
             ];
 
             $access = httpGuzzle('get', $this->userOpenIdUrl, $param);
+            halt($access);
+
         }
         $access_token = $access['access_token'];
         if(empty($access_token)) halt('access_token 获取失败');
@@ -288,7 +290,7 @@ class Wechat extends Controller
             'type'         => 'jsapi'
         ];
 
-        $jsapi = httpGuzzle('post',$this->jsapiTicketUrl,$param);
+        $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
 
         halt($jsapi);
 
