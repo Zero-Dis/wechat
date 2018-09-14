@@ -254,8 +254,7 @@ class Wechat extends Controller
         // 生成签名
         // 1.获取 access_token
         $access_token = $this->getAccessToken();
-        halt($access_token);
-
+        if(empty($access_token)) halt('access_token有误');
         // 2.获取 jsapi_ticket
         $param = [
             'access_token' => $access_token,
