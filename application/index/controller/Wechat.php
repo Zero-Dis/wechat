@@ -277,11 +277,12 @@ class Wechat extends Controller
         $signObj['url']             = $url;
         $signString = $this->formatBizQueryParaMap($signObj, false);
         $signString = sha1($signString);
-        halt($signString);
 
         $this->assign([
-            'appId'=>$this->appId,
-
+            'appId'     => $this->appId,
+            'timestamp' => $timestamp,
+            'nonceStr'  => $noncestr,
+            'signature' => $signString
         ]);
         return view();
     }
