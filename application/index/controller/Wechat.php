@@ -275,7 +275,7 @@ class Wechat extends Controller
         }
         $access_token = $access['access_token'];
         if(empty($access_token)) halt('access_token 获取失败');
-        halt($access_token);
+
         /*$this->getUserOpenId();
         cache('wechatUserInfo',null);
         $cacheOpenId = cache('wechatUserOpenId');
@@ -299,5 +299,22 @@ class Wechat extends Controller
         ]);
         return view();
     }
-    
+
+    //-------------------------------------------------------------------------
+    public function getSacnSignStr(){
+        $wechat_config = [
+            'appid'     =>  $this->appId,//公众号appid
+            'appsecret' =>  $this->secret,//公众号secret
+        ];
+
+        $data['noncestr']     = genRandomString();
+        $data['jsapi_ticket'] = getWxJsapiTicket($wechat_config['appid'],$wechat_config['appsecret']);
+        $data['timestamp']    = time();
+        $data['url']          = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $data['signature']    = makeSign($data);
+        $data['appid']        = $wechat_config['appid'];
+
+        return json_encode($data);
+    }
+
 }
