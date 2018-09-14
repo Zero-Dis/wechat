@@ -186,3 +186,16 @@ function toUrlParams($params){
 
     return $string;
 }
+
+function checkEmpty($value) {
+    if (!isset($value))
+        return true;
+    if ($value === null)
+        return true;
+    if (trim($value) === "")
+        return true;
+    if ($value === [])
+        return true;
+
+    return false;
+}
