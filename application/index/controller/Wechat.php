@@ -266,9 +266,18 @@ class Wechat extends Controller
             $jsapi = httpGuzzle('get',$this->jsapiTicketUrl,$param);
             cache('jsapi',$jsapi,7190);
         }
-
-
-        halt($jsapi);
+        $jsapi_ticket = $jsapi['ticket'];
+        // 3.生成签名
+        $noncestr  = genRandomString();
+        $timestamp = time();
+        $url       = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $signObj['noncestr']        = $noncestr;
+        $signObj['jsapi_ticket']    = $jsapi_ticket;
+        $signObj['timestamp']       = $timestamp;
+        $signObj['url']             = $url;
+        $signString = $this->formatBizQueryParaMap($signObj, false);
+        $signString = sha1($signString);
+        halt($signString);
 
         $this->assign([
             'appId'=>$this->appId,
