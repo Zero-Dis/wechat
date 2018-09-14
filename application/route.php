@@ -19,7 +19,5 @@ Route::get('refreshAccessToken','index/Wechat/refreshAccessToken');
 Route::get('getUserInfo','index/Wechat/getUserInfo');
 
 // 微信分享
-Route::get('wechatShare','index/Wechat/wechatShare');
+Route::get('wechatJsapi','index/Wechat/wechatJsapi');
 
-// 测试能砺
-Route::get('getSacnSignStr','index/Wechat/getSacnSignStr');
