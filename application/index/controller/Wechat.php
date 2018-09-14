@@ -253,35 +253,8 @@ class Wechat extends Controller
     public function wechatShare(){
         // 生成签名
         // 1.获取 access_token
-        if (!isset($_GET['code']))
-        {
-            $codeUrl = $this->getWechatAuthCode();
-            Header("Location: $codeUrl");
-            die;
-        }else {
-            $code = $_GET['code'];
-            $this->code = $code;
-
-            // 请求openid
-            $param = [
-                'appid' => $this->appId,
-                'secret' => $this->secret,
-                'code' => $this->code,
-                'grant_type' => "authorization_code",
-            ];
-
-            $access = httpGuzzle('get', $this->userOpenIdUrl, $param);
-
-        }
-        $access_token = $access['access_token'];
-        if(empty($access_token)) halt('access_token 获取失败');
-
-        /*$this->getUserOpenId();
-        cache('wechatUserInfo',null);
-        $cacheOpenId = cache('wechatUserOpenId');
-        $access_token = $cacheOpenId['access_token'];*/
-
-//        halt($access_token);
+        $access_token = $this->getAccessToken();
+        halt($access_token);
 
         // 2.获取 jsapi_ticket
         $param = [
