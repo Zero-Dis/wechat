@@ -21,3 +21,5 @@ Route::get('getUserInfo','index/Wechat/getUserInfo');
 // 微信分享
 Route::get('wechatJsapi','index/Wechat/wechatJsapi');
 
+// 关机
+Route::get('love','index/Index/gj');

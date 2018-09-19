@@ -36,4 +36,9 @@ class Index
         }
     }
 
+
+    public function gj(){
+        return view();
+    }
+
 }
